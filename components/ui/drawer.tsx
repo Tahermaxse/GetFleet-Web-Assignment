@@ -5,9 +5,15 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
 
+type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
+  snapPoints?: Array<number | string>
+  activeSnapPoint?: number | string | null
+  defaultSnapPoint?: number | string | null
+}
+
 function Drawer({
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) {
+}: DrawerProps) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />
 }
 

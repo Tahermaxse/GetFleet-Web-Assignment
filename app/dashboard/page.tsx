@@ -38,6 +38,9 @@ async function fetchFleetData(): Promise<DeviceLocation[]> {
   return mergeDeviceLocations(devices, positions)
 }
 
+const drawerSnapPoints: number[] = [0.45, 0.7, 0.95]
+const defaultSnapPoint = drawerSnapPoints[1]
+
 export default function DashboardPage() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabKey>("vehicles")
@@ -138,11 +141,17 @@ export default function DashboardPage() {
         )}
       </div>
 
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <DrawerContent className="mx-auto max-h-[75vh] max-w-[400px] rounded-t-3xl border border-border bg-background pb-4"
-        style={{ zIndex: 9999 }}>
-          
-          <div className="flex-1 overflow-y-auto px-4 mt-3">
+      <Drawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        snapPoints={drawerSnapPoints}
+        defaultSnapPoint={defaultSnapPoint}
+      >
+        <DrawerContent
+          className="mx-auto max-h-[75vh] max-w-[400px] rounded-t-3xl border border-border bg-background pb-4"
+          style={{ zIndex: 9999 }}
+        >
+          <div className="mt-3 flex-1 overflow-y-auto px-4">
             <div className="mb-4 flex gap-2 rounded-xl border border-gray-300 bg-background p-1">
               {(["vehicles", "drivers", "alerts"] as TabKey[]).map((tab) => (
                 <button
