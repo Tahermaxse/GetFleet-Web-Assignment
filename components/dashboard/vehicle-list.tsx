@@ -48,6 +48,20 @@ export function VehicleList({ vehicles, selectedVehicle, onSelectVehicle }: Vehi
     }
   }
 
+  const formatTimestamp = (timestamp?: string) => {
+    if (!timestamp) return "Unknown"
+    const date = new Date(timestamp)
+    if (Number.isNaN(date.getTime())) return "Unknown"
+
+    return date.toLocaleString(undefined, {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  }
+
   return (
     <div className="space-y-3">
       {vehicles.length === 0 ? (
@@ -75,7 +89,9 @@ export function VehicleList({ vehicles, selectedVehicle, onSelectVehicle }: Vehi
                 />
                 <div>
                   <h3 className="font-semibold text-foreground">{deviceIdentifier}</h3>
-                  <p className="text-xs text-muted-foreground">{device.lastUpdate ?? position.deviceTime ?? "Unknown"}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatTimestamp(device.lastUpdate ?? position.deviceTime)}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -89,7 +105,7 @@ export function VehicleList({ vehicles, selectedVehicle, onSelectVehicle }: Vehi
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
                 <span className="text-sm text-muted-foreground">Status:</span>
                 <div className="flex items-center gap-2">
                   <span
