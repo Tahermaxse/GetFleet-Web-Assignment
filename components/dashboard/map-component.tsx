@@ -26,26 +26,26 @@ export function MapComponent({ selectedVehicle, points, className }: MapComponen
       <FleetMap points={points} activeDeviceName={selectedVehicle} className="h-full w-full" />
 
       <div className="absolute left-4 top-4 z-[500] flex gap-1 rounded-lg border border-border bg-white">
-        <button className="flex h-9 w-9 items-center justify-center transition-colors hover:rounded-lg hover:bg-muted sm:h-10 sm:w-10">
+        <button className="flex h-10 w-10 items-center justify-center transition-colors hover:rounded-lg hover:bg-muted">
           <MapIcon />
         </button>
-        <button className="flex h-9 w-9 items-center justify-center transition-colors hover:rounded-lg hover:bg-muted sm:h-10 sm:w-10">
+        <button className="flex h-10 w-10 items-center justify-center transition-colors hover:rounded-lg hover:bg-muted">
           <MapIcon2 />
         </button>
       </div>
 
       <div className="absolute right-4 top-4 z-[500] flex items-center gap-3 rounded-lg border border-border bg-white p-2">
-        <label className={`flex cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs transition-colors sm:text-sm ${showZone ? "bg-brand/10" : ""}`}>
+        <label className={`flex cursor-pointer items-center gap-2 rounded px-2 py-1 transition-colors ${showZone ? "bg-brand/10" : ""}`}>
           <Checkbox id="zone" checked={showZone} onCheckedChange={(checked: boolean | "indeterminate") => setShowZone(checked === true)} />
           <span className="text-sm font-medium text-muted-foreground">Zone</span>
         </label>
 
-        <label className={`flex cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs transition-colors sm:text-sm ${showPOI ? "bg-brand/10" : ""}`}>
+        <label className={`flex cursor-pointer items-center gap-2 rounded px-2 py-1 transition-colors ${showPOI ? "bg-brand/10" : ""}`}>
           <Checkbox id="poi" checked={showPOI} onCheckedChange={(checked: boolean | "indeterminate") => setShowPOI(checked === true)} />
           <span className="text-sm font-medium text-muted-foreground">POI</span>
         </label>
 
-        <label className={`flex cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs transition-colors sm:text-sm ${showTraffic ? "bg-brand/10" : ""}`}>
+        <label className={`flex cursor-pointer items-center gap-2 rounded px-2 py-1 transition-colors ${showTraffic ? "bg-brand/10" : ""}`}>
           <Checkbox id="traffic" checked={showTraffic} onCheckedChange={(checked: boolean | "indeterminate") => setShowTraffic(checked === true)} />
           <span className="text-sm font-medium text-muted-foreground">Traffic</span>
         </label>

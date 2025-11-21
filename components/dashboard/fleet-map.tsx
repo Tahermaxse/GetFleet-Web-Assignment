@@ -63,4 +63,3 @@ function FleetMapComponent({ points, className, activeDeviceName }: FleetMapProp
 const FleetMap = memo(FleetMapComponent)
 
 export default FleetMap
-
