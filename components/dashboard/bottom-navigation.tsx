@@ -9,7 +9,7 @@ type BottomNavigationProps = {
 
 export function BottomNavigation({ onLiveClick }: BottomNavigationProps) {
   return (
-    <div className="border-t border-border bg-card">
+    <div className="relative z-[10000] border-t border-border bg-card pb-2 sm:pb-3">
       <div className="flex items-center justify-around py-4">
         <button
           onClick={onLiveClick}
