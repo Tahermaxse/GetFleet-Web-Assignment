@@ -1,0 +1,139 @@
+Here is the full text extracted cleanly from your PDF — **plain text**, ready to paste into Cursor as a `.txt` file.
+(Everything is included exactly as in the PDF.)
+
+
+---
+
+# **Frontend Assignment (Web + Mobile)**
+
+## **Overview**
+
+Please implement the login flow and fleet tracking dashboard shown in the Figma design for both web and mobile platforms using the real staging APIs provided below.
+
+This assignment focuses on:
+• Clean architecture & component reusability (more important than pixel-perfect functionality)
+• Proper session handling with token-based validation
+• Thoughtful, maintainable code structure
+• Visual alignment with the design (Same As The Design)
+
+---
+
+## **Scope**
+
+You will build:
+
+• **Web version → Next.js 14 + Shadcn/ui + Tailwind CSS**
+• **Mobile version → Expo + React Native Paper + react-native-maps**
+
+---
+
+## **Figma Design Reference**
+
+[https://www.figma.com/design/Q11b56RpfBHjf5Yor1MSSr/Assignmnt?node-id=0-1](https://www.figma.com/design/Q11b56RpfBHjf5Yor1MSSr/Assignmnt?node-id=0-1)
+
+**Note:** The Login Page is UI only (No real login).
+On clicking the Login CTA button, persist the token on frontend and validate the session using the session API for protected routes (**/dashboard**).
+
+---
+
+## **API Endpoints (Staging)**
+
+### **1. Session Check**
+
+GET
+`https://gps-staging.getfleet.ai/api/session?token=token-value`
+
+**Token:**
+
+```
+RzBFAiAq7IHa-vP8YEX8vtU_FUhYKjOi7vBMWjLN2yEAbKmYNQIhANtH3uMrlkLBSwScRikMYqgWa5mlrp2xQeDNmM9CWg4eyJ1Ijo0LCJlIjoiMjAyNi0wMS0wMVQwMDowMDowMC4wMDArMDA6MDAifQ
+```
+
+All protected endpoints require the token as a query parameter:
+`?token=tokenvalue`
+
+---
+
+### **2. Devices**
+
+GET
+`https://gps-staging.getfleet.ai/api/devices`
+
+### **3. Latest Positions**
+
+GET
+`https://gps-staging.getfleet.ai/api/positions`
+
+---
+
+## **CORS Proxy Setup (Web Only)**
+
+Add this to **next.config.js**:
+
+```
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://gps-staging.getfleet.ai/api/:path*',
+      },
+    ]
+  },
+}
+
+module.exports = nextConfig
+```
+
+---
+
+## **Submission**
+
+• Two repositories (web and mobile)
+• **Web must be deployed on Vercel**
+• **Mobile:** share Expo project or QR code
+• Include a short README
+• No official deadline — complete as early as possible
+
+---
+
+# **What’s Expected**
+
+## **Web (Next.js 14 – App Router)**
+
+• TypeScript + Shadcn/ui + Tailwind CSS
+• Use rewrites in next.config.js to proxy APIs (CORS)
+• Any map library (Leaflet, Mapbox, Google Maps, etc.)
+• Deploy on Vercel (Required)
+
+---
+
+## **Mobile (Expo)**
+
+• Expo + Expo Router
+• React Native Paper + built-in StyleSheet
+• Any map library
+• No App Store publish needed — Expo QR code is enough
+
+---
+
+## **Core Requirements (Both Platforms)**
+
+• Session validation
+• Token must persist after app/page restart
+• On login success → navigate to protected dashboard
+• Fetch **/devices** and **/positions**
+• Show every device as a marker on the map using its latest position
+• Clean folder structure, reusable components, separation of concerns
+• Focus on architecture, reusability, and code quality more than perfect functionality
+• Small thoughtful UX improvements are appreciated
+
+---
+
+If you want, I can also prepare:
+
+✅ A clean README for your repo
+✅ Folder structure for Web + Mobile
+✅ Starter code templates
+✅ API utility wrapper
+Just tell me!

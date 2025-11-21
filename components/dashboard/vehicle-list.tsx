@@ -1,0 +1,115 @@
+"use client"
+
+import { Eye, Edit2, MapPin } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
+import type { DeviceLocation } from "@/lib/api/getfleet"
+
+interface VehicleListProps {
+  selectedVehicle: string | null
+  onSelectVehicle: (vehicleName: string) => void
+  vehicles: DeviceLocation[]
+}
+
+export function VehicleList({ vehicles, selectedVehicle, onSelectVehicle }: VehicleListProps) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "moving":
+      case "online":
+        return "bg-green-100 text-green-700"
+      case "idling":
+      case "idle":
+        return "bg-yellow-100 text-yellow-700"
+      case "stopped":
+      case "offline":
+        return "bg-red-100 text-red-700"
+      case "no-signal":
+        return "bg-gray-100 text-gray-600"
+      default:
+        return "bg-gray-100 text-gray-600"
+    }
+  }
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "moving":
+        return "Moving"
+      case "idling":
+        return "Idling"
+      case "stopped":
+        return "Stopped"
+      case "no-signal":
+        return "No Signal"
+      case "online":
+        return "Online"
+      case "offline":
+        return "Offline"
+      default:
+        return status
+    }
+  }
+
+  return (
+    <div className="space-y-3">
+      {vehicles.length === 0 ? (
+        <div className="py-8 text-center text-muted-foreground">No vehicles found</div>
+      ) : (
+        vehicles.map(({ device, position }) => {
+          const status = (device.status ?? "unknown").toLowerCase()
+          const deviceIdentifier = device.name ?? `Device #${device.id}`
+          const isSelected = selectedVehicle === deviceIdentifier
+
+          return (
+          <div
+            key={device.id}
+            onClick={() => onSelectVehicle(deviceIdentifier)}
+            className={`rounded-2xl border bg-card p-4 shadow-sm cursor-pointer transition-all ${
+              isSelected ? "border-brand bg-brand/5" : "border-border hover:border-brand/60"
+            }`}
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={isSelected}
+                  onCheckedChange={() => onSelectVehicle(deviceIdentifier)}
+                  className="h-5 w-5"
+                />
+                <div>
+                  <h3 className="font-semibold text-foreground">{deviceIdentifier}</h3>
+                  <p className="text-xs text-muted-foreground">{device.lastUpdate ?? position.deviceTime ?? "Unknown"}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button className="p-1 hover:bg-muted rounded-lg transition-colors">
+                  <Eye className="w-4 h-4 text-green-600" />
+                </button>
+                <button className="p-1 hover:bg-muted rounded-lg transition-colors">
+                  <Edit2 className="w-4 h-4 text-brand" />
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-sm text-muted-foreground">Status:</span>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(status)}`}
+                  >
+                    {getStatusLabel(status)}
+                  </span>
+                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-muted-foreground">
+                    {Math.round(position.speed ?? 0)} KM/hr
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="w-4 h-4 text-orange-500" />
+                <span>{position.address ?? "No address available"}</span>
+              </div>
+            </div>
+          </div>
+        )})
+      )}
+    </div>
+  )
+}
