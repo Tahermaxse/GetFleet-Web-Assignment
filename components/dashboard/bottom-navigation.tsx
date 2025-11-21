@@ -1,30 +1,48 @@
 "use client"
 
-import { Radio,AlertCircle, Bell, EllipsisVertical } from "lucide-react"
-import { TbRoute } from "react-icons/tb";
-export function BottomNavigation() {
+import { Radio, AlertCircle, Bell, EllipsisVertical } from "lucide-react"
+import { TbRoute } from "react-icons/tb"
+
+type BottomNavigationProps = {
+  onLiveClick?: () => void
+}
+
+export function BottomNavigation({ onLiveClick }: BottomNavigationProps) {
   return (
     <div className="border-t border-border bg-card">
       <div className="flex items-center justify-around py-4">
-        <button className="flex flex-col items-center gap-1 px-4 text-brand hover:opacity-80 transition-opacity">
-          <Radio className="w-5 h-5" />
-          <span className="text-xs font-medium">Live</span>
+        <button
+          onClick={onLiveClick}
+          className="flex flex-col items-center gap-1 px-3 text-brand transition-opacity hover:opacity-80 sm:px-4"
+        >
+          <Radio className="h-5 w-5" />
+          <span className="text-[11px] font-medium uppercase tracking-wide sm:text-xs sm:normal-case sm:tracking-normal">
+            Live
+          </span>
         </button>
-        <button className="flex flex-col items-center gap-1 px-4 text-muted-foreground hover:text-brand transition-colors">
-          <TbRoute className="w-5 h-5" />
-          <span className="text-xs font-medium">Trips</span>
+        <button className="flex flex-col items-center gap-1 px-3 text-muted-foreground transition-colors hover:text-brand sm:px-4">
+          <TbRoute className="h-5 w-5" />
+          <span className="text-[11px] font-medium uppercase tracking-wide sm:text-xs sm:normal-case sm:tracking-normal">
+            Trips
+          </span>
         </button>
-        <button className="flex flex-col items-center gap-1 px-4 text-muted-foreground hover:text-brand transition-colors">
-          <AlertCircle className="w-5 h-5" />
-          <span className="text-xs font-medium">Reports</span>
+        <button className="flex flex-col items-center gap-1 px-3 text-muted-foreground transition-colors hover:text-brand sm:px-4">
+          <AlertCircle className="h-5 w-5" />
+          <span className="text-[11px] font-medium uppercase tracking-wide sm:text-xs sm:normal-case sm:tracking-normal">
+            Reports
+          </span>
         </button>
-        <button className="flex flex-col items-center gap-1 px-4 text-muted-foreground hover:text-brand transition-colors">
-          <Bell className="w-5 h-5" />
-          <span className="text-xs font-medium">Reminders</span>
+        <button className="flex flex-col items-center gap-1 px-3 text-muted-foreground transition-colors hover:text-brand sm:px-4">
+          <Bell className="h-5 w-5" />
+          <span className="text-[11px] font-medium uppercase tracking-wide sm:text-xs sm:normal-case sm:tracking-normal">
+            Reminders
+          </span>
         </button>
-        <button className="flex flex-col items-center gap-1 px-4 text-muted-foreground hover:text-brand transition-colors">
-          <EllipsisVertical className="w-5 h-5" />
-          <span className="text-xs font-medium">More</span>
+        <button className="flex flex-col items-center gap-1 px-3 text-muted-foreground transition-colors hover:text-brand sm:px-4">
+          <EllipsisVertical className="h-5 w-5" />
+          <span className="text-[11px] font-medium uppercase tracking-wide sm:text-xs sm:normal-case sm:tracking-normal">
+            More
+          </span>
         </button>
       </div>
     </div>

@@ -65,7 +65,7 @@ export function VehicleList({ vehicles, selectedVehicle, onSelectVehicle }: Vehi
   return (
     <div className="space-y-3">
       {vehicles.length === 0 ? (
-        <div className="py-8 text-center text-muted-foreground">No vehicles found</div>
+        <div className="py-8 text-center text-xs text-muted-foreground sm:text-sm">No vehicles found</div>
       ) : (
         vehicles.map(({ device, position }) => {
           const status = (device.status ?? "unknown").toLowerCase()
@@ -85,41 +85,41 @@ export function VehicleList({ vehicles, selectedVehicle, onSelectVehicle }: Vehi
                 <Checkbox
                   checked={isSelected}
                   onCheckedChange={() => onSelectVehicle(deviceIdentifier)}
-                  className="h-5 w-5"
+                  className="h-4 w-4 sm:h-5 sm:w-5"
                 />
                 <div>
-                  <h3 className="font-semibold text-foreground">{deviceIdentifier}</h3>
-                  <p className="text-xs text-muted-foreground">
+                  <h3 className="text-sm font-semibold text-foreground sm:text-base">{deviceIdentifier}</h3>
+                  <p className="text-[11px] text-muted-foreground sm:text-xs">
                     {formatTimestamp(device.lastUpdate ?? position.deviceTime)}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button className="p-1 hover:bg-muted rounded-lg transition-colors">
-                  <Eye className="w-4 h-4 text-green-600" />
+                  <Eye className="h-4 w-4 text-green-600 sm:h-5 sm:w-5" />
                 </button>
                 <button className="p-1 hover:bg-muted rounded-lg transition-colors">
-                  <Edit2 className="w-4 h-4 text-brand" />
+                  <Edit2 className="h-4 w-4 text-brand sm:h-5 sm:w-5" />
                 </button>
               </div>
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-muted-foreground">Status:</span>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                <span className="text-xs text-muted-foreground sm:text-sm">Status:</span>
                 <div className="flex items-center gap-2">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(status)}`}
+                    className={`rounded-full px-3 py-1 text-[11px] font-medium sm:text-xs ${getStatusColor(status)}`}
                   >
                     {getStatusLabel(status)}
                   </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-muted-foreground">
-                    {Math.round(position.speed ?? 0)} KM/hr
+                  <span className="rounded-full px-3 py-1 text-[11px] font-medium text-muted-foreground sm:text-xs bg-gray-100">
+                    {Math.round(position.speed ?? 0)} km/hr
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4 text-orange-500" />
+              <div className="flex items-center gap-2 text-xs text-muted-foreground sm:text-sm">
+                <MapPin className="h-4 w-4 text-orange-500" />
                 <span>{position.address ?? "No address available"}</span>
               </div>
             </div>

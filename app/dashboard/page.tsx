@@ -10,6 +10,7 @@ import { BottomNavigation } from "@/components/dashboard/bottom-navigation"
 import { MapComponent } from "@/components/dashboard/map-component"
 import { VehicleFilters } from "@/components/dashboard/vehicle-filters"
 import { VehicleList } from "@/components/dashboard/vehicle-list"
+import { Drawer, DrawerContent } from "@/components/ui/drawer"
 import {
   fetchDevices,
   fetchPositions,
@@ -44,6 +45,7 @@ export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null)
   const [allGroupsChecked, setAllGroupsChecked] = useState(true)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const {
     data: points = [],
@@ -113,15 +115,15 @@ export default function DashboardPage() {
       <div className="relative flex-1 overflow-hidden bg-slate-50">
         {isLoading && (
           <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-white/80">
-            <Loader2 className="h-8 w-8 animate-spin text-brand" />
-            <p className="text-sm text-muted-foreground">Fetching latest positions...</p>
+            <Loader2 className="h-7 w-7 animate-spin text-brand sm:h-8 sm:w-8" />
+            <p className="text-xs text-muted-foreground sm:text-sm">Fetching latest positions...</p>
           </div>
         )}
 
         {!isLoading && errorMessage && (
           <div className="absolute inset-0 z-20 flex items-center justify-center">
-            <div className="flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700">
-              <AlertTriangle className="h-5 w-5" />
+            <div className="flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 sm:text-base">
+              <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5" />
               <p>{errorMessage}</p>
             </div>
           </div>
@@ -136,56 +138,66 @@ export default function DashboardPage() {
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-background">
-        <div className="m-4 flex gap-2 rounded-xl border border-gray-300 bg-background p-1">
-          {(["vehicles", "drivers", "alerts"] as TabKey[]).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 rounded-xl px-6 py-3 text-base font-semibold transition-colors ${
-                activeTab === tab
-                  ? "bg-brand/10 text-brand"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          ))}
-        </div>
+      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+        <DrawerContent className="mx-auto max-h-[75vh] max-w-[400px] rounded-t-3xl border border-border bg-background pb-4"
+        style={{ zIndex: 9999 }}>
+          
+          <div className="flex-1 overflow-y-auto px-4 mt-3">
+            <div className="mb-4 flex gap-2 rounded-xl border border-gray-300 bg-background p-1">
+              {(["vehicles", "drivers", "alerts"] as TabKey[]).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex-1 rounded-xl px-4 py-2 text-sm font-medium transition-colors sm:px-6 sm:py-3 sm:text-base ${
+                    activeTab === tab
+                      ? "bg-brand/10 text-brand"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </div>
 
-        {activeTab === "vehicles" && (
-          <div className="space-y-4 px-4 pb-4">
-            <VehicleFilters
-              statusOptions={statusOptions}
-              statusFilter={statusFilter}
-              onStatusChange={setStatusFilter}
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              allGroupsChecked={allGroupsChecked}
-              onToggleAllGroups={setAllGroupsChecked}
-            />
-            <VehicleList
-              vehicles={filteredVehicles}
-              selectedVehicle={selectedVehicle}
-              onSelectVehicle={setSelectedVehicle}
-            />
+            {activeTab === "vehicles" && (
+              <div className="space-y-4 pb-2">
+                <VehicleFilters
+                  statusOptions={statusOptions}
+                  statusFilter={statusFilter}
+                  onStatusChange={setStatusFilter}
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  allGroupsChecked={allGroupsChecked}
+                  onToggleAllGroups={setAllGroupsChecked}
+                />
+                <VehicleList
+                  vehicles={filteredVehicles}
+                  selectedVehicle={selectedVehicle}
+                  onSelectVehicle={setSelectedVehicle}
+                />
+              </div>
+            )}
+
+            {activeTab === "drivers" && (
+              <div className="p-4 text-center text-xs text-muted-foreground sm:text-sm">
+                Drivers section coming soon
+              </div>
+            )}
+
+            {activeTab === "alerts" && (
+              <div className="p-4 text-center text-xs text-muted-foreground sm:text-sm">
+                Alerts section coming soon
+              </div>
+            )}
           </div>
-        )}
+        </DrawerContent>
+      </Drawer>
 
-        {activeTab === "drivers" && (
-          <div className="p-4 text-center text-muted-foreground">
-            Drivers section coming soon
-          </div>
-        )}
-
-        {activeTab === "alerts" && (
-          <div className="p-4 text-center text-muted-foreground">
-            Alerts section coming soon
-          </div>
-        )}
-      </div>
-
-      <BottomNavigation />
+      <BottomNavigation
+        onLiveClick={() => {
+          setDrawerOpen(true)
+        }}
+      />
     </div>
   )
 }
