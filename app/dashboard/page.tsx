@@ -18,6 +18,7 @@ import {
   type DeviceLocation,
 } from "@/lib/api/getfleet"
 import { clearSessionToken, getSessionToken } from "@/lib/session"
+export const dynamic = "force-dynamic"
 
 type TabKey = "vehicles" | "drivers" | "alerts"
 

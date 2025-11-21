@@ -1,9 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
+
 import { Checkbox } from "@/components/ui/checkbox"
-import FleetMap from "@/components/dashboard/fleet-map"
 import type { DeviceLocation } from "@/lib/api/getfleet"
+
+const FleetMap = dynamic(() => import("@/components/dashboard/fleet-map"), {
+  ssr: false,
+})
 
 interface MapComponentProps {
   selectedVehicle: string | null
