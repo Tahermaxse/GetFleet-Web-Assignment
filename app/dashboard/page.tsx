@@ -112,7 +112,7 @@ export default function DashboardPage() {
   const errorMessage = isError ? "Unable to load fleet data. Please sign in again." : null
 
   return (
-    <div className="mx-auto flex h-screen overflow-hidden flex-col bg-background pb-24 max-w-[400px]">
+    <div className="mx-auto flex h-[810px] overflow-hidden flex-col bg-background pb-24 max-w-[400px]">
       <Header />
 
       <div className="relative flex-1 overflow-hidden bg-slate-50">
@@ -202,7 +202,7 @@ export default function DashboardPage() {
         </DrawerContent>
       </Drawer>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 flex justify-center px-3 sm:px-0">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 flex justify-center px-3  sm:px-0">
         <div className="pointer-events-auto w-full max-w-[400px]">
           <BottomNavigation
             onLiveClick={() => {
